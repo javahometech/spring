@@ -1,0 +1,135 @@
+#Create bitbucket branch
+
+##Create local branch
+
+    $ git checkout -b sync
+    Switched to a new branch 'sync'
+    $ git branch
+      master
+    * sync
+
+
+##Add remote
+
+    $ git remote add bb git@bitbucket.org:jcaraballo/test.git
+    $ git remote -v
+    bb	git@bitbucket.org:jcaraballo/test.git (fetch)
+    bb	git@bitbucket.org:jcaraballo/test.git (push)
+    origin	git@github.com:jcaraballo/test.git (fetch)
+    origin	git@github.com:jcaraballo/test.git (push)
+
+
+##Push to bitbucket remote (in order to create the remote branch)
+  
+    $ git push -u bb sync
+    Counting objects: 3, done.
+    Writing objects: 100% (3/3), 219 bytes, done.
+    Total 3 (delta 0), reused 0 (delta 0)
+    remote: bb/acl: jcaraballo is allowed. accepted payload.
+    To git@bitbucket.org:jcaraballo/test.git
+     * [new branch]      sync -> sync
+    Branch sync set up to track remote branch sync from bb.
+
+
+#Commit some stuff to the branch in bitbucket
+
+##Do some changes in branch
+
+    $ git status
+    # On branch sync
+    nothing to commit (working directory clean)
+    $ touch README2
+    $ git add README2
+    $ git commit -m '2nd README'
+    [sync 9b22c80] 2nd README
+     0 files changed, 0 insertions(+), 0 deletions(-)
+     create mode 100644 README2
+    $ git status
+    # On branch sync
+    # Your branch is ahead of 'bb/sync' by 1 commit.
+    #
+    nothing to commit (working directory clean)
+
+
+##Push changes to bitbucket remote
+
+    $ git push
+    Counting objects: 3, done.
+    Delta compression using up to 4 threads.
+    Compressing objects: 100% (2/2), done.
+    Writing objects: 100% (2/2), 248 bytes, done.
+    Total 2 (delta 0), reused 0 (delta 0)
+    remote: bb/acl: jcaraballo is allowed. accepted payload.
+    To git@bitbucket.org:jcaraballo/test.git
+       358cdf5..9b22c80  sync -> sync
+
+
+##Do some more changes in branch sync
+
+    $ touch README3 README4
+    $ git add README3 README4
+    $ git commit -m 'READMEeees! READMEees!'
+    [sync f24ff03] READMEeees! READMEees!
+     0 files changed, 0 insertions(+), 0 deletions(-)
+     create mode 100644 README3
+     create mode 100644 README4
+
+
+##Push to bitbucket
+
+    $ git push
+    Counting objects: 3, done.
+    Delta compression using up to 4 threads.
+    Compressing objects: 100% (2/2), done.
+    Writing objects: 100% (2/2), 261 bytes, done.
+    Total 2 (delta 0), reused 0 (delta 0)
+    remote: bb/acl: jcaraballo is allowed. accepted payload.
+    To git@bitbucket.org:jcaraballo/test.git
+       9b22c80..f24ff03  sync -> sync
+  
+
+#Merge back into github
+##Change to (local) master branch
+
+    $ git branch
+      master
+    * sync
+    $ git checkout master
+    Switched to branch 'master'
+    $ git branch
+    * master
+      sync
+
+
+##Check there are no new changes in the remote
+
+    $ git pull
+    Already up-to-date.
+
+
+##Merge (still locally) changes from sync into master
+
+    $ git merge sync
+    Updating 358cdf5..f24ff03
+    Fast-forward
+     0 files changed, 0 insertions(+), 0 deletions(-)
+     create mode 100644 README2
+     create mode 100644 README3
+     create mode 100644 README4
+    $ git status
+    # On branch master
+    # Your branch is ahead of 'origin/master' by 2 commits.
+    #
+    nothing to commit (working directory clean)
+
+
+##Push to origin/master at github
+
+    $ git push
+    Counting objects: 5, done.
+    Delta compression using up to 4 threads.
+    Compressing objects: 100% (4/4), done.
+    Writing objects: 100% (4/4), 440 bytes, done.
+    Total 4 (delta 1), reused 0 (delta 0)
+    To git@github.com:jcaraballo/test.git
+       358cdf5..f24ff03  master -> master
