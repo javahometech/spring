@@ -8,7 +8,6 @@
       master
     * sync
 
-
 ##Add remote
 
     $ git remote add bb git@bitbucket.org:jcaraballo/test.git
@@ -29,7 +28,6 @@
     To git@bitbucket.org:jcaraballo/test.git
      * [new branch]      sync -> sync
     Branch sync set up to track remote branch sync from bb.
-
 
 #Commit some stuff to the branch in bitbucket
 
