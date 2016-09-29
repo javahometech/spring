@@ -17,7 +17,6 @@
     origin	git@github.com:jcaraballo/test.git (fetch)
     origin	git@github.com:jcaraballo/test.git (push)
 
-
 ##Push to bitbucket remote (in order to create the remote branch)
   
     $ git push -u bb sync
