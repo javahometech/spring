@@ -1,4 +1,3 @@
 Ramakrishna
 pidikitirk@gmail.com
 My current location is Marathalli
-this line is to test git revert command
